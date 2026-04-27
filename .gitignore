@@ -1,0 +1,36 @@
+# Dépendances
+node_modules/
+
+# Variables d'environnement — ne jamais committer
+.env
+.env.local
+.env.production
+
+# Build frontend
+frontend/dist/
+
+# Images uploadées — servies mais non versionnées
+backend/uploads/products/*
+!backend/uploads/products/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code
+.claude/
+claude.md
+
+# Playwright MCP screenshots/snapshots
+.playwright-mcp/
+
+# Logs console
+*.log

@@ -1,0 +1,301 @@
+.page {
+  padding-top: calc(var(--header-h) + var(--space-16));
+  min-height: 100vh;
+  padding-bottom: var(--space-24);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  margin-bottom: var(--space-12);
+}
+
+/* Nav rapide */
+.quickNav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-12);
+}
+
+.quickCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: border-color 300ms ease;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.quickCard:hover { border-color: var(--color-gold); }
+
+.quickCardLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.quickIcon { color: var(--color-gold); }
+.quickArrow { color: var(--color-text-muted); }
+
+/* Messages */
+.msgSuccess {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(109, 184, 122, 0.1);
+  border: 1px solid rgba(109, 184, 122, 0.3);
+  color: var(--color-success);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-6);
+}
+
+.msgError {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(224, 92, 92, 0.1);
+  border: 1px solid rgba(224, 92, 92, 0.3);
+  color: var(--color-error);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-6);
+}
+
+/* Sections */
+.section {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-12);
+  margin-bottom: var(--space-12);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 300;
+  margin-bottom: var(--space-8);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.alignEnd {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* ===== ADRESSES ===== */
+.addrEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-12) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.addrEmptyIcon { color: rgba(201, 169, 110, 0.25); }
+
+.addrGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.addrCard {
+  position: relative;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: border-color 200ms ease;
+}
+
+.addrCard:hover { border-color: rgba(201, 169, 110, 0.3); }
+
+.addrDefault {
+  border-color: var(--color-gold);
+  background: rgba(201, 169, 110, 0.03);
+}
+
+.addrBadge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+  padding: 2px 7px;
+  margin-bottom: var(--space-4);
+}
+
+.addrLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.addrName {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 300;
+  margin-bottom: var(--space-3);
+}
+
+.addrLine {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.addrPhone {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+  margin-top: var(--space-2);
+}
+
+.addrActions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.addrBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border);
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: border-color 200ms, color 200ms;
+}
+
+.addrBtn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.addrBtnDanger:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+/* Déconnexion */
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ===== MODAL ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.modal {
+  background: var(--color-bg-2);
+  border: 1px solid var(--color-border);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modalTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 300;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.modalBody {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.span2 { grid-column: 1 / -1; }
+
+.checkLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.modalActions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .grid2       { grid-template-columns: 1fr; }
+  .addrGrid    { grid-template-columns: 1fr; }
+  .modalGrid   { grid-template-columns: 1fr; }
+  .span2       { grid-column: 1; }
+  .quickNav    { grid-template-columns: 1fr; }
+}

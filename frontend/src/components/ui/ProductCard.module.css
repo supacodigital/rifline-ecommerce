@@ -1,0 +1,165 @@
+.card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--color-surface);
+  cursor: pointer;
+  group: true;
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--color-bg-3);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-xslow) var(--ease);
+}
+
+.card:hover .image { transform: scale(1.06); }
+
+/* Placeholder quand pas d'image */
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-bg-3), var(--color-bg-2));
+  transition: transform var(--duration-xslow) var(--ease);
+}
+
+.card:hover .imagePlaceholder { transform: scale(1.04); }
+
+.placeholderGlyph {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: rgba(201, 169, 110, 0.12);
+  user-select: none;
+}
+
+/* Overlay hover */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover .overlay { opacity: 1; }
+
+.quickAdd {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transform: translateY(8px);
+  transition: transform var(--duration-base) var(--ease),
+              background var(--duration-fast) var(--ease);
+}
+
+.card:hover .quickAdd { transform: translateY(0); }
+.quickAdd:hover { background: var(--color-gold); }
+
+/* Wishlist */
+.wishlistBtn {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--color-text-muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--duration-base) var(--ease),
+              transform var(--duration-base) var(--ease),
+              color var(--duration-fast) var(--ease),
+              background var(--duration-fast) var(--ease);
+}
+
+.card:hover .wishlistBtn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wishlistBtn:hover {
+  color: var(--color-gold);
+  background: rgba(10,10,10,0.85);
+}
+
+.wishlistBtn.wishlistActive {
+  opacity: 1;
+  color: var(--color-gold);
+}
+
+/* Infos produit */
+.info {
+  padding: var(--space-4) var(--space-1);
+}
+
+.category {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  margin-bottom: var(--space-1);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 300;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: var(--space-2);
+  transition: color var(--duration-base) var(--ease);
+}
+
+.card:hover .name { color: var(--color-gold); }
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.outOfStock {
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
