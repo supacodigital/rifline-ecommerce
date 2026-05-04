@@ -337,10 +337,23 @@ function getServicePoints({ country_code, postal_code, city, radius = 5000 }) {
 function normalizeOpeningTimes(times) {
   if (!times || typeof times !== 'object') return null;
   const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-  return Object.entries(times).map(([dayIndex, slots]) => ({
-    day:   DAYS[parseInt(dayIndex)] || dayIndex,
-    slots: Array.isArray(slots) && slots.length ? slots.join(', ') : 'Fermé',
-  }));
+
+  const result = [];
+  for (let i = 0; i <= 6; i++) {
+    const slots = times[String(i)];
+    if (!Array.isArray(slots) || slots.length === 0) {
+      result.push({ day: DAYS[i], slots: 'Fermé', closed: true });
+      continue;
+    }
+    // Sendcloud utilise "00:01 - 23:59" pour indiquer ouvert toute la journée
+    const normalized = slots.map(slot =>
+      slot === '00:01 - 23:59' || slot === '00:00 - 23:59' || slot === '00:00 - 00:00'
+        ? 'Ouvert 24h/24'
+        : slot
+    );
+    result.push({ day: DAYS[i], slots: normalized.join(', '), closed: false });
+  }
+  return result;
 }
 
 module.exports = { getRates, createParcel, getServicePoints };

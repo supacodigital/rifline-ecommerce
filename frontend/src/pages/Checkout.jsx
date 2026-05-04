@@ -303,7 +303,7 @@ export default function Checkout() {
                             <div className={s.relayHours}>
                               <Clock size={11} />
                               <div className={s.relayHoursGrid}>
-                                {point.opening_times.map(h => (
+                                {point.opening_times.filter(h => !h.closed).map(h => (
                                   <span key={h.day} className={s.relayHoursRow}>
                                     <span className={s.relayDay}>{h.day}</span>
                                     <span className={s.relaySlots}>{h.slots}</span>
