@@ -1,0 +1,27 @@
+.btn {
+  position: fixed;
+  bottom: var(--space-8);
+  right: var(--space-8);
+  z-index: 150;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  transition: transform var(--duration-base) var(--ease),
+              box-shadow var(--duration-base) var(--ease);
+}
+
+.btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.55);
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+}

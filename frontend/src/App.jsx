@@ -21,6 +21,11 @@ import Orders       from './pages/Orders'
 import OrderDetail  from './pages/OrderDetail'
 import Wishlist     from './pages/Wishlist'
 
+import MentionsLegales from './pages/legal/MentionsLegales'
+import Confidentialite  from './pages/legal/Confidentialite'
+import CGV              from './pages/legal/CGV'
+import RGPD             from './pages/legal/RGPD'
+
 import AdminDashboard  from './pages/admin/Dashboard'
 import AdminProducts   from './pages/admin/Products'
 import AdminOrders     from './pages/admin/Orders'
@@ -77,7 +82,11 @@ export default function App() {
                 <Route path="compte"       element={<RequireAuth><Account /></RequireAuth>} />
                 <Route path="commandes"  element={<RequireAuth><Orders /></RequireAuth>} />
                 <Route path="commandes/:id" element={<RequireAuth><OrderDetail /></RequireAuth>} />
-                <Route path="wishlist"   element={<RequireAuth><Wishlist /></RequireAuth>} />
+                <Route path="wishlist"          element={<RequireAuth><Wishlist /></RequireAuth>} />
+                <Route path="mentions-legales" element={<MentionsLegales />} />
+                <Route path="confidentialite"  element={<Confidentialite />} />
+                <Route path="cgv"              element={<CGV />} />
+                <Route path="rgpd"             element={<RGPD />} />
               </Route>
 
               {/* Admin */}

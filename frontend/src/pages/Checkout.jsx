@@ -134,7 +134,7 @@ export default function Checkout() {
     try {
       const orderRes = await api.post('/orders', {
         shipping:              address,
-        items:                 items.map(i => ({ product_id: i.id, quantity: i.quantity })),
+        items:                 items.map(i => ({ product_id: i.id, variant_id: i.variant_id ?? null, quantity: i.quantity })),
         coupon_code:           couponResult ? couponCode : null,
         shipping_cost_eur:     rate?.price_eur || 0,
         shipping_method_id:    rate?.rate_id || null,

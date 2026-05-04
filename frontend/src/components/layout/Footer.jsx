@@ -54,6 +54,7 @@ export default function Footer() {
             <Link to="/mentions-legales">Mentions légales</Link>
             <Link to="/confidentialite">Confidentialité</Link>
             <Link to="/cgv">CGV</Link>
+            <Link to="/rgpd">RGPD</Link>
           </div>
         </div>
       </div>

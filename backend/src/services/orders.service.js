@@ -25,12 +25,34 @@ async function createOrder({ user_id, shipping, items, coupon_code, currency_cod
       if (!product || !product.is_active) {
         const e = new Error(`Produit ${item.product_id} indisponible`); e.status = 400; throw e;
       }
-      if (product.stock < item.quantity) {
-        const e = new Error(`Stock insuffisant pour "${product.name_fr}"`); e.status = 400; throw e;
+
+      let unit_price = product.price;
+      let variant_id   = null;
+      let variant_name = null;
+
+      if (item.variant_id) {
+        const [[variant]] = await conn.query(
+          'SELECT * FROM product_variants WHERE id = ? AND product_id = ? AND is_active = 1 FOR UPDATE',
+          [item.variant_id, item.product_id]
+        );
+        if (!variant) {
+          const e = new Error(`Variante ${item.variant_id} indisponible`); e.status = 400; throw e;
+        }
+        if (variant.stock < item.quantity) {
+          const e = new Error(`Stock insuffisant pour "${product.name_fr} — ${variant.name}"`); e.status = 400; throw e;
+        }
+        if (variant.price !== null) unit_price = variant.price;
+        variant_id   = variant.id;
+        variant_name = variant.name;
+      } else {
+        if (product.stock < item.quantity) {
+          const e = new Error(`Stock insuffisant pour "${product.name_fr}"`); e.status = 400; throw e;
+        }
       }
-      const sub = parseFloat((product.price * item.quantity).toFixed(2));
+
+      const sub = parseFloat((unit_price * item.quantity).toFixed(2));
       subtotal_eur += sub;
-      enrichedItems.push({ product_id: product.id, product_name: product.name_fr, product_sku: product.sku, unit_price: product.price, quantity: item.quantity, subtotal: sub });
+      enrichedItems.push({ product_id: product.id, product_name: product.name_fr, product_sku: product.sku, unit_price, quantity: item.quantity, subtotal: sub, variant_id, variant_name });
     }
 
     // Validation coupon à l'intérieur de la transaction avec FOR UPDATE
@@ -59,9 +81,13 @@ async function createOrder({ user_id, shipping, items, coupon_code, currency_cod
 
     const total_eur = parseFloat((subtotal_eur - discount_eur + (shipping_cost_eur || 0)).toFixed(2));
 
-    // Décrémenter le stock
+    // Décrémenter le stock (variante ou produit)
     for (const item of enrichedItems) {
-      await conn.query('UPDATE products SET stock = stock - ? WHERE id = ?', [item.quantity, item.product_id]);
+      if (item.variant_id) {
+        await conn.query('UPDATE product_variants SET stock = stock - ? WHERE id = ?', [item.quantity, item.variant_id]);
+      } else {
+        await conn.query('UPDATE products SET stock = stock - ? WHERE id = ?', [item.quantity, item.product_id]);
+      }
     }
 
     // Incrémenter le compteur du coupon

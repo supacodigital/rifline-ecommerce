@@ -133,6 +133,124 @@
   max-width: 440px;
 }
 
+/* Variantes */
+.variantsBlock {
+  margin-bottom: var(--space-8);
+}
+
+.variantsHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.variantsLabel {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.variantsSelected {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.variantsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.variantBtn {
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  overflow: hidden;
+}
+
+.variantBtn:hover:not(:disabled) {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.variantThumb {
+  width: 80px;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.variantThumbPlaceholder {
+  width: 80px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-3);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: rgba(201, 169, 110, 0.15);
+  flex-shrink: 0;
+}
+
+.variantBtnName {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-1);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 1.2;
+  border-top: 1px solid var(--color-border);
+  transition: background var(--duration-base) var(--ease);
+}
+
+.variantSelected {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.variantSelected .variantBtnName {
+  background: rgba(201, 169, 110, 0.08);
+  border-top-color: var(--color-gold);
+}
+
+.variantSoldOut {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.variantSoldOut .variantBtnName {
+  text-decoration: line-through;
+}
+
+.variantPriceDiff {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  display: block;
+  padding-bottom: var(--space-1);
+}
+
+.variantHint {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  margin-top: var(--space-3);
+  letter-spacing: 0.04em;
+}
+
 /* Quantité */
 .qtyRow {
   display: flex;

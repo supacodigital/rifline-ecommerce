@@ -37,11 +37,19 @@ router.get('/',       listRules, validate, ctrl.list);
 router.get('/:slug',  ctrl.show);
 
 // Routes admin
-router.post('/',                          requireAdmin, createRules, validate, ctrl.create);
-router.put('/:id',                        requireAdmin, ctrl.update);
-router.delete('/:id',                     requireAdmin, ctrl.destroy);
-router.post('/:id/images',                requireAdmin, upload.single('image'), ctrl.uploadImage);
-router.post('/:id/images/:imageId/cover', requireAdmin, ctrl.setCover);
-router.delete('/:id/images/:imageId',     requireAdmin, ctrl.deleteImage);
+router.post('/',                                  requireAdmin, createRules, validate, ctrl.create);
+router.put('/:id',                                requireAdmin, ctrl.update);
+router.delete('/:id',                             requireAdmin, ctrl.destroy);
+router.post('/:id/images',                        requireAdmin, upload.single('image'), ctrl.uploadImage);
+router.post('/:id/images/:imageId/cover',         requireAdmin, ctrl.setCover);
+router.delete('/:id/images/:imageId',             requireAdmin, ctrl.deleteImage);
+
+// Variantes
+router.get('/:id/variants',                             requireAdmin, ctrl.listVariants);
+router.post('/:id/variants',                            requireAdmin, ctrl.createVariant);
+router.put('/:id/variants/:variantId',                  requireAdmin, ctrl.updateVariant);
+router.delete('/:id/variants/:variantId',               requireAdmin, ctrl.deleteVariant);
+router.post('/:id/variants/:variantId/image',           requireAdmin, upload.single('image'), ctrl.uploadVariantImage);
+router.delete('/:id/variants/:variantId/image',         requireAdmin, ctrl.deleteVariantImage);
 
 module.exports = router;

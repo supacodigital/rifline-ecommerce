@@ -21,6 +21,7 @@ async function getProduct(slug) {
   }
   product.images    = await repo.getImages(product.id);
   product.tags      = await repo.getTags(product.id);
+  product.variants  = await repo.getVariants(product.id);
   product.cover_url = product.images.find(i => i.is_cover)?.url || product.images[0]?.url || null;
   return product;
 }
@@ -90,4 +91,67 @@ async function setCoverImage(product_id, image_id) {
   await repo.setCover(product_id, image_id);
 }
 
-module.exports = { listProducts, getProduct, createProduct, updateProduct, deleteProduct, addImage, removeImage, setCoverImage };
+async function listVariants(product_id) {
+  const product = await repo.findById(product_id);
+  if (!product) { const e = new Error('Produit introuvable'); e.status = 404; throw e; }
+  return repo.getVariants(product_id);
+}
+
+async function addVariant(product_id, data) {
+  const product = await repo.findById(product_id);
+  if (!product) { const e = new Error('Produit introuvable'); e.status = 404; throw e; }
+  if (!data.name?.trim()) { const e = new Error('Le nom de la variante est requis'); e.status = 400; throw e; }
+  const variants = await repo.getVariants(product_id);
+  const id = await repo.createVariant({ product_id, ...data, sort_order: variants.length });
+  return repo.findVariantById(id);
+}
+
+async function editVariant(product_id, variant_id, data) {
+  const variant = await repo.findVariantById(variant_id);
+  if (!variant || variant.product_id !== product_id) {
+    const e = new Error('Variante introuvable'); e.status = 404; throw e;
+  }
+  await repo.updateVariant(variant_id, data);
+  return repo.findVariantById(variant_id);
+}
+
+async function removeVariant(product_id, variant_id) {
+  const variant = await repo.findVariantById(variant_id);
+  if (!variant || variant.product_id !== product_id) {
+    const e = new Error('Variante introuvable'); e.status = 404; throw e;
+  }
+  // Supprimer le fichier image si existant
+  if (variant.image_url) {
+    const filepath = path.join(__dirname, '../../uploads/products', path.basename(variant.image_url));
+    fs.unlink(filepath, () => {});
+  }
+  await repo.deleteVariant(variant_id);
+}
+
+async function setVariantImage(product_id, variant_id, file, uploadsDir) {
+  const variant = await repo.findVariantById(variant_id);
+  if (!variant || variant.product_id !== product_id) {
+    const e = new Error('Variante introuvable'); e.status = 404; throw e;
+  }
+  // Supprimer l'ancienne image si elle existe
+  if (variant.image_url) {
+    const old = path.join(uploadsDir, path.basename(variant.image_url));
+    fs.unlink(old, () => {});
+  }
+  const image_url = `/uploads/products/${file.filename}`;
+  await repo.updateVariant(variant_id, { image_url });
+  return repo.findVariantById(variant_id);
+}
+
+async function removeVariantImage(product_id, variant_id, uploadsDir) {
+  const variant = await repo.findVariantById(variant_id);
+  if (!variant || variant.product_id !== product_id) {
+    const e = new Error('Variante introuvable'); e.status = 404; throw e;
+  }
+  if (!variant.image_url) return;
+  const filepath = path.join(uploadsDir, path.basename(variant.image_url));
+  fs.unlink(filepath, () => {});
+  await repo.updateVariant(variant_id, { image_url: null });
+}
+
+module.exports = { listProducts, getProduct, createProduct, updateProduct, deleteProduct, addImage, removeImage, setCoverImage, listVariants, addVariant, editVariant, removeVariant, setVariantImage, removeVariantImage };

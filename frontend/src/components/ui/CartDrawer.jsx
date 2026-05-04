@@ -48,7 +48,7 @@ export default function CartDrawer() {
             </div>
           ) : (
             items.map(item => (
-              <div key={item.id} className={s.item}>
+              <div key={item.cartKey ?? item.id} className={s.item}>
                 {/* Image */}
                 {item.cover_url ? (
                   <img src={item.cover_url} alt={item.name_fr} className={s.itemImg} />
@@ -62,20 +62,23 @@ export default function CartDrawer() {
                     <p className={s.itemCat}>{item.category_name_fr}</p>
                   )}
                   <h4 className={s.itemName}>{item.name_fr}</h4>
+                  {item.variant_name && (
+                    <p className={s.itemVariant}>{item.variant_name}</p>
+                  )}
                   <p className={s.itemPrice}>{format(item.price)}</p>
 
                   {/* Quantité */}
                   <div className={s.itemQty}>
                     <button
                       className={s.itemQtyBtn}
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.cartKey, item.quantity - 1)}
                     >
                       <Minus size={11} />
                     </button>
                     <span className={s.itemQtyVal}>{item.quantity}</span>
                     <button
                       className={s.itemQtyBtn}
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.cartKey, item.quantity + 1)}
                     >
                       <Plus size={11} />
                     </button>
@@ -85,7 +88,7 @@ export default function CartDrawer() {
                 {/* Supprimer */}
                 <button
                   className={s.removeBtn}
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item.cartKey)}
                   aria-label="Supprimer"
                 >
                   <Trash2 size={15} strokeWidth={1.5} />

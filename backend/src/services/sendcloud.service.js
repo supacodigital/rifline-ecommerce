@@ -147,12 +147,12 @@ function getPriceForWeight(countryData, weightKg) {
 // Mapping méthodes fallback → IDs Sendcloud par tranche de poids
 // IDs issus du compte Sendcloud (GET /api/v2/shipping_methods)
 const SENDCLOUD_METHOD_MAP = {
-  // Mondial Relay Point Relais domestic (FR)
+  // Mondial Relay Point Relais domestic (FR) — IDs vérifiés sur le compte
   mondial_relay: [
     { maxKg: 0.25, id: 28035 }, { maxKg: 0.5,  id: 28036 }, { maxKg: 1,   id: 28037 },
     { maxKg: 2,    id: 28038 }, { maxKg: 3,     id: 28039 }, { maxKg: 5,   id: 28040 },
     { maxKg: 7,    id: 28041 }, { maxKg: 10,    id: 28042 }, { maxKg: 15,  id: 28043 },
-    { maxKg: 20,   id: 28044 }, { maxKg: 30,    id: 28045 },
+    { maxKg: 20,   id: 28044 }, { maxKg: 25,    id: 28045 }, { maxKg: 30,  id: 28046 },
   ],
   // Colissimo Home domestic (FR)
   colissimo_home: [

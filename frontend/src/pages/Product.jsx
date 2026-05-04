@@ -24,6 +24,7 @@ export default function Product() {
   const [activeImg, setActiveImg] = useState(0)
   const [qty, setQty]          = useState(1)
   const [loading, setLoading]  = useState(true)
+  const [selectedVariant, setSelectedVariant] = useState(null)
   const { addItem }                = useCart()
   const { format }                 = useCurrency()
   const { toggle, isInWishlist }   = useWishlist()
@@ -33,6 +34,8 @@ export default function Product() {
 
   useEffect(() => {
     setLoading(true)
+    setSelectedVariant(null)
+    setQty(1)
     api.get(`/products/${slug}`)
       .then(res => {
         setProduct(res.data.product)
@@ -62,12 +65,37 @@ export default function Product() {
     </div>
   )
 
-  const images = product.images || []
-  const cover  = images[activeImg]?.url || null
+  const images      = product.images || []
+  const variants    = (product.variants || []).filter(v => v.is_active)
+  const hasVariants = variants.length > 0
+
+  // Si la variante sélectionnée a sa propre image, elle remplace l'image principale
+  const variantImage = selectedVariant?.image_url || null
+  const cover        = variantImage || images[activeImg]?.url || null
+
+  // Prix et stock effectifs selon la variante sélectionnée
+  const displayPrice = selectedVariant?.price ?? product.price
+  const activeStock  = hasVariants
+    ? (selectedVariant?.stock ?? 0)
+    : product.stock
+  const canAdd = hasVariants ? (selectedVariant !== null && activeStock > 0) : activeStock > 0
+
+  function handleVariantSelect(variant) {
+    setSelectedVariant(prev => prev?.id === variant.id ? null : variant)
+    setQty(1)
+    // Si la variante n'a pas d'image propre, on revient à la première image du produit
+    if (!variant.image_url) setActiveImg(0)
+  }
 
   function handleAdd() {
     const coverImg = images.find(i => i.is_cover) || images[0]
-    addItem({ ...product, cover_url: coverImg?.url || null }, qty)
+    addItem(
+      { ...product, cover_url: variantImage || coverImg?.url || null },
+      qty,
+      selectedVariant
+        ? { id: selectedVariant.id, name: selectedVariant.name, price: selectedVariant.price, stock: selectedVariant.stock, image_url: selectedVariant.image_url || null }
+        : null
+    )
   }
 
   function handleWishlist() {
@@ -121,14 +149,56 @@ export default function Product() {
           )}
 
           <h1 className={s.productName}>{product.name_fr}</h1>
-          <div className={s.price}>{format(product.price)}</div>
+          <div className={s.price}>{format(displayPrice)}</div>
           <div className={s.divider} />
 
           {product.description_fr && (
             <p className={s.description}>{product.description_fr}</p>
           )}
 
-          {product.stock > 0 ? (
+          {/* Sélecteur de variantes */}
+          {hasVariants && (
+            <div className={s.variantsBlock}>
+              <div className={s.variantsHeader}>
+                <span className={s.variantsLabel}>{t('product.variant', 'Variante')}</span>
+                {selectedVariant && (
+                  <span className={s.variantsSelected}>{selectedVariant.name}</span>
+                )}
+              </div>
+              <div className={s.variantsList}>
+                {variants.map(v => {
+                  const isSelected = selectedVariant?.id === v.id
+                  const outOfStock = v.stock === 0
+                  return (
+                    <button
+                      key={v.id}
+                      className={`${s.variantBtn} ${isSelected ? s.variantSelected : ''} ${outOfStock ? s.variantSoldOut : ''}`}
+                      onClick={() => !outOfStock && handleVariantSelect(v)}
+                      disabled={outOfStock}
+                      title={outOfStock ? t('product.outOfStock') : v.name}
+                    >
+                      {v.image_url ? (
+                        <img src={v.image_url} alt={v.name} className={s.variantThumb} />
+                      ) : (
+                        <div className={s.variantThumbPlaceholder}>◈</div>
+                      )}
+                      <span className={s.variantBtnName}>{v.name}</span>
+                      {v.price !== null && v.price !== product.price && (
+                        <span className={s.variantPriceDiff}>
+                          {v.price > product.price ? '+' : ''}{format(v.price - product.price)}
+                        </span>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+              {hasVariants && !selectedVariant && (
+                <p className={s.variantHint}>{t('product.selectVariant', 'Veuillez sélectionner une variante')}</p>
+              )}
+            </div>
+          )}
+
+          {canAdd ? (
             <>
               {/* Quantité */}
               <div className={s.qtyRow}>
@@ -138,7 +208,7 @@ export default function Product() {
                     <Minus size={14} />
                   </button>
                   <span className={s.qtyVal}>{qty}</span>
-                  <button className={s.qtyBtn} onClick={() => setQty(q => Math.min(product.stock, q + 1))}>
+                  <button className={s.qtyBtn} onClick={() => setQty(q => Math.min(activeStock, q + 1))}>
                     <Plus size={14} />
                   </button>
                 </div>
@@ -159,7 +229,9 @@ export default function Product() {
               </div>
             </>
           ) : (
-            <p className={s.outOfStock}>{t('product.outOfStock')}</p>
+            <p className={s.outOfStock}>
+              {hasVariants && !selectedVariant ? '' : t('product.outOfStock')}
+            </p>
           )}
 
           {/* Métas */}
@@ -167,7 +239,7 @@ export default function Product() {
             {product.sku && (
               <div className={s.meta}>
                 <strong>{t('product.ref')}</strong>
-                <span>{product.sku}</span>
+                <span>{selectedVariant?.sku || product.sku}</span>
               </div>
             )}
             {product.weight_grams && (

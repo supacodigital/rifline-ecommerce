@@ -30,9 +30,9 @@ async function createOrder(order, items, conn) {
 
   // Insérer les lignes de commande
   if (items.length) {
-    const rows = items.map(i => [order_id, i.product_id, i.product_name, i.product_sku || null, i.unit_price, i.quantity, i.subtotal]);
+    const rows = items.map(i => [order_id, i.product_id, i.variant_id || null, i.variant_name || null, i.product_name, i.product_sku || null, i.unit_price, i.quantity, i.subtotal]);
     await conn.query(
-      'INSERT INTO order_items (order_id, product_id, product_name, product_sku, unit_price, quantity, subtotal) VALUES ?',
+      'INSERT INTO order_items (order_id, product_id, variant_id, variant_name, product_name, product_sku, unit_price, quantity, subtotal) VALUES ?',
       [rows]
     );
   }

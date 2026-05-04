@@ -132,8 +132,44 @@ async function setTags(product_id, tags) {
   await db.query('INSERT INTO product_tags (product_id, tag) VALUES ?', [values]);
 }
 
+// --- Variantes ---
+async function getVariants(product_id) {
+  const [rows] = await db.query(
+    'SELECT * FROM product_variants WHERE product_id = ? ORDER BY sort_order ASC, id ASC',
+    [product_id]
+  );
+  return rows;
+}
+
+async function createVariant({ product_id, name, sku, price, stock, sort_order }) {
+  const [result] = await db.query(
+    'INSERT INTO product_variants (product_id, name, sku, price, stock, sort_order) VALUES (?, ?, ?, ?, ?, ?)',
+    [product_id, name, sku || null, price ?? null, stock ?? 0, sort_order ?? 0]
+  );
+  return result.insertId;
+}
+
+async function updateVariant(id, fields) {
+  const allowed = ['name', 'sku', 'price', 'stock', 'sort_order', 'is_active', 'image_url'];
+  const keys    = Object.keys(fields).filter(k => allowed.includes(k));
+  if (!keys.length) return;
+  const set    = keys.map(k => `${k} = ?`).join(', ');
+  const values = keys.map(k => fields[k]);
+  await db.query(`UPDATE product_variants SET ${set} WHERE id = ?`, [...values, id]);
+}
+
+async function deleteVariant(id) {
+  await db.query('DELETE FROM product_variants WHERE id = ?', [id]);
+}
+
+async function findVariantById(id) {
+  const [rows] = await db.query('SELECT * FROM product_variants WHERE id = ?', [id]);
+  return rows[0] || null;
+}
+
 module.exports = {
   findAll, findBySlug, findById, create, update, softDelete,
   getImages, addImage, deleteImage, countImages, setCover,
   getTags, setTags,
+  getVariants, createVariant, updateVariant, deleteVariant, findVariantById,
 };

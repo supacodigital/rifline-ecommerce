@@ -62,4 +62,47 @@ async function setCover(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { list, show, create, update, destroy, uploadImage, deleteImage, setCover };
+async function listVariants(req, res, next) {
+  try {
+    const variants = await service.listVariants(Number(req.params.id));
+    res.json({ variants });
+  } catch (err) { next(err); }
+}
+
+async function createVariant(req, res, next) {
+  try {
+    const variant = await service.addVariant(Number(req.params.id), req.body);
+    res.status(201).json({ variant });
+  } catch (err) { next(err); }
+}
+
+async function updateVariant(req, res, next) {
+  try {
+    const variant = await service.editVariant(Number(req.params.id), Number(req.params.variantId), req.body);
+    res.json({ variant });
+  } catch (err) { next(err); }
+}
+
+async function deleteVariant(req, res, next) {
+  try {
+    await service.removeVariant(Number(req.params.id), Number(req.params.variantId));
+    res.json({ ok: true });
+  } catch (err) { next(err); }
+}
+
+async function uploadVariantImage(req, res, next) {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'Aucun fichier reçu' });
+    const variant = await service.setVariantImage(Number(req.params.id), Number(req.params.variantId), req.file, UPLOADS_DIR);
+    res.json({ variant });
+  } catch (err) { next(err); }
+}
+
+async function deleteVariantImage(req, res, next) {
+  try {
+    await service.removeVariantImage(Number(req.params.id), Number(req.params.variantId), UPLOADS_DIR);
+    res.json({ ok: true });
+  } catch (err) { next(err); }
+}
+
+module.exports = { list, show, create, update, destroy, uploadImage, deleteImage, setCover, listVariants, createVariant, updateVariant, deleteVariant, uploadVariantImage, deleteVariantImage };
