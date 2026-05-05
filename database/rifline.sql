@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : lun. 04 mai 2026 à 21:08
+-- Généré le : mar. 05 mai 2026 à 12:07
 -- Version du serveur : 8.0.40
 -- Version de PHP : 8.3.14
 
@@ -188,7 +188,11 @@ INSERT INTO `orders` (`id`, `order_number`, `user_id`, `shipping_first_name`, `s
 (15, 'ORD-1777320526596-112256', 3, 'Jean', 'Dupont', '12 rue de la République', NULL, 'Paris', '75001', NULL, 'FR', '0612345678', 20.00, 0.00, 4.99, 24.99, 'EUR', 1.000000, NULL, 'colissimo_home', NULL, NULL, NULL, 'cancelled', '2b9cca8f-1968-4887-b7a6-8cc9da2ebb9e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-04-27 22:08:46', '2026-04-27 23:13:01'),
 (16, 'ORD-1777320588681-25E43A', 3, 'Jean', 'Dupont', '12 rue de la République', NULL, 'Paris', '75001', NULL, 'FR', '0612345678', 20.00, 0.00, 0.00, 20.00, 'EUR', 1.000000, NULL, NULL, NULL, NULL, NULL, 'cancelled', '2153f9d0-2bc0-4a18-a96d-23862efc9604', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-04-27 22:09:48', '2026-04-27 23:13:01'),
 (17, 'ORD-1777558300590-00ECEF', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 60.00, 0.00, 4.99, 64.99, 'EUR', 1.000000, NULL, 'colissimo_home', NULL, NULL, NULL, 'cancelled', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-04-30 16:11:40', '2026-05-04 22:16:52'),
-(18, 'ORD-1777927022242-655661', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 60.00, 0.00, 3.49, 63.49, 'EUR', 1.000000, NULL, 'mondial_relay', '12802437', 'LOCKER 24/7 CARREFOUR MKT ST GE', 'RUE DE GENEVE 43, 01630 SAINT GENIS POUILLY', 'pending', '17d0730d-5edf-4945-b87c-2d5efac199f9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-04 22:37:02', '2026-05-04 22:37:02');
+(18, 'ORD-1777927022242-655661', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 60.00, 0.00, 3.49, 63.49, 'EUR', 1.000000, NULL, 'mondial_relay', '12802437', 'LOCKER 24/7 CARREFOUR MKT ST GE', 'RUE DE GENEVE 43, 01630 SAINT GENIS POUILLY', 'cancelled', '17d0730d-5edf-4945-b87c-2d5efac199f9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-04 22:37:02', '2026-05-04 23:22:02'),
+(19, 'ORD-1777929558177-2D3E46', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 40.00, 0.00, 4.99, 44.99, 'EUR', 1.000000, NULL, 'colissimo_home', NULL, NULL, NULL, 'cancelled', 'd24c5a3f-842c-41d0-b617-b625a6de6613', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-04 23:19:18', '2026-05-05 13:52:20'),
+(20, 'ORD-1777930066005-71B486', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 40.00, 0.00, 3.49, 43.49, 'EUR', 1.000000, NULL, 'mondial_relay', '12802437', 'LOCKER 24/7 CARREFOUR MKT ST GE', 'RUE DE GENEVE 43, 01630 SAINT GENIS POUILLY', 'cancelled', 'dd9f56c4-25be-4690-b488-22ff71b53607', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-04 23:27:46', '2026-05-05 13:52:20'),
+(21, 'ORD-1777930113112-093A05', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 40.00, 0.00, 4.99, 44.99, 'EUR', 1.000000, NULL, 'colissimo_home', NULL, NULL, NULL, 'cancelled', '2acec63d-0f91-426a-b316-eafa5032294d', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-04 23:28:33', '2026-05-05 13:52:20'),
+(22, 'ORD-1777930556945-8C783F', 4, 'Supaco', 'Digital', '1b Rue de la Prairie', NULL, 'Saint-Genis-Pouilly', '01630', NULL, 'FR', '0783052412', 40.00, 0.00, 4.99, 44.99, 'EUR', 1.000000, NULL, 'colissimo_home', NULL, NULL, NULL, 'cancelled', 'd0f16e48-b015-4bb0-8321-2d41a2dc06a1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-05-04 23:35:56', '2026-05-05 13:52:20');
 
 -- --------------------------------------------------------
 
@@ -232,7 +236,15 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `variant_id`, `varian
 (15, 15, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-04-27 22:08:46'),
 (16, 16, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-04-27 22:09:48'),
 (17, 17, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 3, 60.00, '2026-04-30 16:11:40'),
-(18, 18, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 3, 60.00, '2026-05-04 22:37:02');
+(18, 18, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 3, 60.00, '2026-05-04 22:37:02'),
+(19, 19, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:19:18'),
+(20, 19, 1, 1, 'Vanille', 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:19:18'),
+(21, 20, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:27:46'),
+(22, 20, 1, 1, 'Vanille', 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:27:46'),
+(23, 21, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:28:33'),
+(24, 21, 1, 1, 'Vanille', 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:28:33'),
+(25, 22, 1, NULL, NULL, 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:35:56'),
+(26, 22, 1, 1, 'Vanille', 'Fakhar Lattafa', 'FAKH', 20.00, 1, 20.00, '2026-05-04 23:35:56');
 
 -- --------------------------------------------------------
 
@@ -285,7 +297,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name_fr`, `name_en`, `slug`, `description_fr`, `description_en`, `price`, `stock`, `sku`, `weight_grams`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Fakhar Lattafa', 'Fakhar Lattafa', 'fakhar-lattafa', 'Le parfum qui attire tous les regards ✨\nUn parfum luxueux, longue tenue et hyper élégant.\nNotes sucrées, florales et légèrement fruitées : un mélange séduisant qui reste sur la peau toute la journée.\n💎 Top notes : grenade, fruits rouges\n🌸 Heart notes : jasmin, fleurs blanches\n💛 Base notes : musc, vanille, ambre\n⭐ Idéal pour soirée, mariage, sorties ou cadeau\n⭐ Parfum intense, classe et très apprécié\n⭐ Look 100% Dubai style\n📦 Disponible maintenant\n💨 Envoi rapide\n🔥 Rapport qualité prix imbattable', '', 20.00, 80, 'FAKH', 4, 1, '2026-04-12 16:26:54', '2026-05-04 22:37:02', NULL),
+(1, 1, 'Fakhar Lattafa', 'Fakhar Lattafa', 'fakhar-lattafa', 'Le parfum qui attire tous les regards ✨\nUn parfum luxueux, longue tenue et hyper élégant.\nNotes sucrées, florales et légèrement fruitées : un mélange séduisant qui reste sur la peau toute la journée.\n💎 Top notes : grenade, fruits rouges\n🌸 Heart notes : jasmin, fleurs blanches\n💛 Base notes : musc, vanille, ambre\n⭐ Idéal pour soirée, mariage, sorties ou cadeau\n⭐ Parfum intense, classe et très apprécié\n⭐ Look 100% Dubai style\n📦 Disponible maintenant\n💨 Envoi rapide\n🔥 Rapport qualité prix imbattable', '', 20.00, 80, 'FAKH', 4, 1, '2026-04-12 16:26:54', '2026-05-05 13:52:20', NULL),
 (3, 1, 'Fakhar Lattafa  2', 'Fakhar Lattafa  2', 'fakhar-lattafa-2', 'wefretvrtv', '', 20.00, 100, 'FAKH1', 100, 1, '2026-04-30 16:18:33', '2026-04-30 16:18:33', NULL);
 
 -- --------------------------------------------------------
@@ -348,7 +360,7 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `name`, `image_url`, `sku`, `price`, `stock`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Vanille', '/uploads/products/1777928040403-953030.jpeg', NULL, 20.00, 100, 0, 1, '2026-05-04 22:49:27', '2026-05-04 22:54:00');
+(1, 1, 'Vanille', '/uploads/products/1777928040403-953030.jpeg', NULL, 20.00, 96, 0, 1, '2026-05-04 22:49:27', '2026-05-04 23:35:56');
 
 -- --------------------------------------------------------
 
@@ -376,7 +388,7 @@ INSERT INTO `refresh_tokens` (`id`, `user_id`, `token_hash`, `expires_at`, `crea
 (21, 1, '15592dbce68f49e5fd1421e546bbee3a0f77bc4f8ccc586ff3d5bf93dda98aa4', '2026-05-04 20:11:12', '2026-04-27 22:11:12'),
 (22, 1, 'eaee5635532ceec7442d05bdadb621d07bd9426ec1940193ed74f4c844513894', '2026-05-04 20:12:54', '2026-04-27 22:12:54'),
 (23, 3, '21b23ec4c5139c38b2c2f476978f439d7d783d7943f0dd2ad5d755fde8d85877', '2026-05-04 20:13:10', '2026-04-27 22:13:09'),
-(30, 4, 'cec1774171192bffc80343e1b55e2e66d30f5c50f3f33595b69b239888f03149', '2026-05-11 21:04:09', '2026-05-04 23:04:08');
+(33, 4, '2e0ac0c6ef50be735171fb646a9debfe79ad02c018e6aa1018fb9242893ee774', '2026-05-12 11:52:35', '2026-05-05 13:52:34');
 
 -- --------------------------------------------------------
 
@@ -652,13 +664,13 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `password_reset_tokens`
@@ -694,7 +706,7 @@ ALTER TABLE `product_variants`
 -- AUTO_INCREMENT pour la table `refresh_tokens`
 --
 ALTER TABLE `refresh_tokens`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `reviews`
