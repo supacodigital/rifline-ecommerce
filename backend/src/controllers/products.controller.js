@@ -62,6 +62,16 @@ async function setCover(req, res, next) {
   } catch (err) { next(err); }
 }
 
+async function adminImages(req, res, next) {
+  try {
+    const repo = require('../repositories/products.repository');
+    const product = await repo.findById(Number(req.params.id));
+    if (!product) return res.status(404).json({ error: 'Produit introuvable' });
+    const images = await repo.getImages(product.id);
+    res.json({ images });
+  } catch (err) { next(err); }
+}
+
 async function listVariants(req, res, next) {
   try {
     const variants = await service.listVariants(Number(req.params.id));
@@ -105,4 +115,4 @@ async function deleteVariantImage(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { list, show, create, update, destroy, uploadImage, deleteImage, setCover, listVariants, createVariant, updateVariant, deleteVariant, uploadVariantImage, deleteVariantImage };
+module.exports = { list, show, create, update, destroy, adminImages, uploadImage, deleteImage, setCover, listVariants, createVariant, updateVariant, deleteVariant, uploadVariantImage, deleteVariantImage };

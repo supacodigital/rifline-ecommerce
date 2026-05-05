@@ -40,6 +40,7 @@ router.get('/:slug',  ctrl.show);
 router.post('/',                                  requireAdmin, createRules, validate, ctrl.create);
 router.put('/:id',                                requireAdmin, ctrl.update);
 router.delete('/:id',                             requireAdmin, ctrl.destroy);
+router.get('/:id/images',                         requireAdmin, ctrl.adminImages);
 router.post('/:id/images',                        requireAdmin, upload.single('image'), ctrl.uploadImage);
 router.post('/:id/images/:imageId/cover',         requireAdmin, ctrl.setCover);
 router.delete('/:id/images/:imageId',             requireAdmin, ctrl.deleteImage);

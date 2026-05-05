@@ -41,8 +41,8 @@ export default function AdminProducts() {
   async function openImages(p) {
     setImgModal(p)
     try {
-      const res = await api.get(`/products/${p.slug}`)
-      setImages(res.data.product?.images || [])
+      const res = await api.get(`/products/${p.id}/images`)
+      setImages(res.data.images || [])
     } catch { setImages([]) }
   }
 

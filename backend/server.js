@@ -54,7 +54,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 
-  // Nettoyage des commandes pending abandonnées au démarrage puis toutes les heures
+  // Nettoyage des commandes pending abandonnées au démarrage puis toutes les 30 minutes (= TTL)
   cleanupPendingOrders();
-  setInterval(cleanupPendingOrders, 60 * 60 * 1000);
+  setInterval(cleanupPendingOrders, 30 * 60 * 1000);
 });

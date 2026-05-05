@@ -74,7 +74,12 @@ async function findByPaymentIntent(stripe_payment_intent_id) {
 }
 
 async function findByCheckoutId(sumup_checkout_id) {
-  const [rows] = await db.query('SELECT * FROM orders WHERE sumup_checkout_id = ?', [sumup_checkout_id]);
+  const [rows] = await db.query(
+    `SELECT o.*, u.email, u.first_name, u.last_name
+     FROM orders o JOIN users u ON u.id = o.user_id
+     WHERE o.sumup_checkout_id = ?`,
+    [sumup_checkout_id]
+  );
   return rows[0] || null;
 }
 

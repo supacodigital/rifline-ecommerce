@@ -38,16 +38,18 @@ export default function SumupPaymentForm({ checkoutId, total, format, onBack, on
           onResponse: (type, body) => {
             if (!mounted) return
 
+            console.log('[SumUp]', type, body)
+
             if (type === 'success') {
               onSuccess?.()
             } else if (type === 'error') {
-              setSdkError(body?.message || t('common.error'))
+              const msg = body?.message || body?.error_message || JSON.stringify(body) || t('common.error')
+              setSdkError(msg)
+            } else if (type === 'invalid') {
+              setSdkError(body?.message || 'Données de carte invalides')
             }
-            // 'sent-payment' et 'auth-screen' sont des états intermédiaires — on ignore
           },
-          onLoad: () => {
-            // Widget prêt — rien à faire
-          },
+          onLoad: () => {},
         })
       } catch (err) {
         if (mounted) setSdkError(err.message)

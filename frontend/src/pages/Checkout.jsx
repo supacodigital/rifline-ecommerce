@@ -340,6 +340,7 @@ export default function Checkout() {
               )}
               <p className={s.paymentInfo}>{t('checkout.sumupInfo')}</p>
               <SumupPaymentForm
+                key={checkoutId}
                 checkoutId={checkoutId}
                 total={total}
                 format={format}
@@ -356,7 +357,7 @@ export default function Checkout() {
           <h2 className={s.summaryTitle}>{t('checkout.summary')}</h2>
           <div className={s.summaryItems}>
             {items.map(item => (
-              <div key={item.id} className={s.summaryItem}>
+              <div key={item.cartKey ?? item.id} className={s.summaryItem}>
                 <div className={s.summaryItemImgWrap}>
                   {item.cover_url
                     ? <img src={item.cover_url} alt={item.name_fr} className={s.summaryItemImg} />

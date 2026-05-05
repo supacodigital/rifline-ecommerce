@@ -12,7 +12,7 @@ async function revenueByDay(days = 30) {
        COUNT(*) AS order_count,
        SUM(total_eur) AS revenue_eur
      FROM orders
-     WHERE status NOT IN ('cancelled','refunded')
+     WHERE status NOT IN ('pending','cancelled','refunded')
        AND created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)
      GROUP BY DATE(created_at)
      ORDER BY day ASC`,
@@ -29,7 +29,7 @@ async function globalStats() {
        SUM(total_eur) AS total_revenue_eur,
        AVG(total_eur) AS avg_order_eur
      FROM orders
-     WHERE status NOT IN ('cancelled','refunded')`
+     WHERE status NOT IN ('pending','cancelled','refunded')`
   );
 
   const [[customers]] = await db.query(
@@ -73,7 +73,7 @@ async function revenueByMonth(months = 12) {
        COUNT(*) AS order_count,
        SUM(total_eur) AS revenue_eur
      FROM orders
-     WHERE status NOT IN ('cancelled','refunded')
+     WHERE status NOT IN ('pending','cancelled','refunded')
        AND created_at >= DATE_SUB(NOW(), INTERVAL ? MONTH)
      GROUP BY DATE_FORMAT(created_at, '%Y-%m')
      ORDER BY month ASC`,

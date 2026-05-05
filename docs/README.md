@@ -185,3 +185,46 @@ ALTER TABLE orders
 - Icônes Lucide React uniquement
 - Pas d'ORM — raw SQL uniquement
 - Architecture backend : `routes → controllers → services → repositories`
+
+
+
+Audit global — Rifline e-commerce
+CRITIQUE — 3 problèmes bloquants en production
+1. Table password_reset_tokens absente du schéma de base
+
+Fichier : backend/ecommerce_dev.sql + backend/src/repositories/auth.repository.js
+Problème : La table est utilisée dans auth.repository.js (INSERT, SELECT, UPDATE) mais elle n'existe pas dans ecommerce_dev.sql. La migration 002_create_password_reset_tokens.sql a été supprimée (visible dans le git status). En production, toute demande de reset de mot de passe crashe avec une erreur SQL.
+Correction : Créer la migration manquante.
+2. GET /api/orders/ (admin) mort — route shadowing Express
+
+Fichier : backend/src/routes/orders.routes.js
+Problème : router.get('/:id', ...) est déclaré à la ligne 14, avant router.get('/', ...) à la ligne 17. En Express, GET / matche d'abord /:id avec id = "" (qui retourne un 404 de la DB), donc adminList n'est jamais atteint. L'admin ne peut pas voir la liste des commandes.
+Correction : Mettre router.get('/') avant router.get('/:id').
+3. Cleanup job ne restaure pas le stock des variantes
+
+Fichier : backend/src/jobs/cleanupPendingOrders.js
+Problème : Quand une commande pending expire, le job restaure uniquement le stock dans products — il ne touche pas product_variants. Les commandes avec variantes laissent donc le stock des variantes décrémenté définitivement, même après annulation.
+Correction : Ajouter une requête de restauration sur product_variants.
+MAJEUR — 2 problèmes fonctionnels importants
+4. Email de confirmation : order.email toujours null via webhook
+
+Fichier : backend/src/services/sumup.service.js
+Problème : Dans handleWebhookEvent, la commande est récupérée via findByCheckoutId qui fait un SELECT * FROM orders sans JOIN sur users. L'email est donc undefined. sendOrderConfirmation envoie vers undefined et l'email ne part pas. Le fallback confirmCheckoutFromClient utilise findById (avec JOIN) — lui fonctionne correctement.
+Correction : Ajouter le JOIN sur users dans findByCheckoutId.
+5. order_items.variant_id absent de la colonne DB
+
+Fichier : backend/ecommerce_dev.sql + backend/migrations/002_add_product_variants.sql
+Problème : La migration 002 ajoute variant_id et variant_name à order_items, mais ces colonnes n'existent pas dans le schéma de base ecommerce_dev.sql. Si la migration n'a pas été appliquée en prod, tout INSERT INTO order_items avec variante crashe.
+Correction : Vérifier que la migration 002 a bien été appliquée sur la DB de prod.
+MINEUR — 3 points à améliorer
+6. Double route /me et /mine inutile
+
+Fichier : backend/src/routes/orders.routes.js
+Les deux routes font exactement la même chose. À nettoyer.
+7. Pas de table password_reset_tokens dans ecommerce_dev.sql
+
+Même problème que le point 1, mais côté fichier de schema de référence — le fichier SQL exporté ne reflète plus la réalité de la DB après migrations.
+8. cleanupPendingOrders tourne toutes les heures mais TTL est 30 min
+
+Fichier : backend/server.js
+Des commandes peuvent rester "pending" de 30 min à 1h30 en pratique. Pas critique, mais passer le setInterval à 30 minutes serait plus cohérent.

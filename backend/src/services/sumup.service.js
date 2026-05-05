@@ -57,6 +57,11 @@ async function createCheckout(order_id, user_id) {
     return_url:         `${process.env.FRONTEND_URL}/confirmation?order=${order.order_number}`,
   };
 
+  // Si un checkout SumUp existe déjà pour cette commande, le réutiliser
+  if (order.sumup_checkout_id) {
+    return { checkout_id: order.sumup_checkout_id };
+  }
+
   const res = await fetch(`${SUMUP_API}/v0.1/checkouts`, {
     method:  'POST',
     headers: {
@@ -65,6 +70,27 @@ async function createCheckout(order_id, user_id) {
     },
     body: JSON.stringify(body),
   });
+
+  // 409 = checkout déjà existant pour ce checkout_reference → récupérer l'ID existant
+  if (res.status === 409) {
+    const errData = await res.json().catch(() => ({}));
+    // Chercher le checkout existant par reference
+    const listRes = await fetch(
+      `${SUMUP_API}/v0.1/checkouts?checkout_reference=${encodeURIComponent(order.order_number)}`,
+      { headers: { 'Authorization': `Bearer ${token}` } }
+    );
+    if (listRes.ok) {
+      const existing = await listRes.json();
+      const found = Array.isArray(existing) ? existing[0] : existing;
+      if (found?.id) {
+        await ordersRepo.updateStatus(order.id, 'pending', { sumup_checkout_id: found.id });
+        return { checkout_id: found.id };
+      }
+    }
+    const e = new Error(errData.message || 'Checkout SumUp dupliqué');
+    e.status = 409;
+    throw e;
+  }
 
   if (!res.ok) {
     const text = await res.text();

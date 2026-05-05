@@ -24,12 +24,30 @@ async function cleanupPendingOrders() {
 
     const orderIds = orders.map(o => o.id);
 
-    // Restaurer le stock pour chaque article
+    // Restaurer le stock des produits sans variante
     await conn.query(
       `UPDATE products p
        JOIN order_items oi ON oi.product_id = p.id
        SET p.stock = p.stock + oi.quantity
-       WHERE oi.order_id IN (?)`,
+       WHERE oi.order_id IN (?) AND oi.variant_id IS NULL`,
+      [orderIds]
+    );
+
+    // Restaurer le stock des variantes
+    await conn.query(
+      `UPDATE product_variants pv
+       JOIN order_items oi ON oi.variant_id = pv.id
+       SET pv.stock = pv.stock + oi.quantity
+       WHERE oi.order_id IN (?) AND oi.variant_id IS NOT NULL`,
+      [orderIds]
+    );
+
+    // Décrémenter used_count des coupons utilisés dans ces commandes
+    await conn.query(
+      `UPDATE coupons c
+       JOIN orders o ON o.coupon_code = c.code
+       SET c.used_count = GREATEST(c.used_count - 1, 0)
+       WHERE o.id IN (?) AND o.coupon_code IS NOT NULL`,
       [orderIds]
     );
 
