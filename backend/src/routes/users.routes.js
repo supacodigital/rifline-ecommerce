@@ -3,13 +3,15 @@ const router  = express.Router();
 const ctrl    = require('../controllers/users.controller');
 const requireAuth  = require('../middlewares/requireAuth');
 const requireAdmin = require('../middlewares/requireAdmin');
+const validate = require('../middlewares/validate');
+const { addressRules } = require('../middlewares/validators/address.validators');
 
 router.get('/me',                requireAuth, ctrl.getProfile);
 router.put('/me',                requireAuth, ctrl.updateProfile);
 router.put('/me/password',       requireAuth, ctrl.changePassword);
 router.get('/me/addresses',      requireAuth, ctrl.listAddresses);
-router.post('/me/addresses',     requireAuth, ctrl.addAddress);
-router.put('/me/addresses/:id',  requireAuth, ctrl.updateAddress);
+router.post('/me/addresses',     requireAuth, addressRules, validate, ctrl.addAddress);
+router.put('/me/addresses/:id',  requireAuth, addressRules, validate, ctrl.updateAddress);
 router.delete('/me/addresses/:id', requireAuth, ctrl.deleteAddress);
 
 // Admin

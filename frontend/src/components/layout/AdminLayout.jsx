@@ -1,5 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Package, ShoppingBag, Tag, Ticket, Users, BarChart2, DollarSign, LogOut, ArrowLeft } from 'lucide-react'
+import { LayoutDashboard, Package, ShoppingBag, Tag, Ticket, Users, BarChart2, DollarSign, MessageSquare, LogOut, ArrowLeft } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
 const links = [
@@ -9,6 +9,7 @@ const links = [
   { to: '/admin/categories', label: 'Catégories',  icon: Tag },
   { to: '/admin/coupons',    label: 'Coupons',     icon: Ticket },
   { to: '/admin/clients',    label: 'Clients',     icon: Users },
+  { to: '/admin/avis',       label: 'Avis',        icon: MessageSquare },
   { to: '/admin/rapports',   label: 'Rapports',    icon: BarChart2 },
   { to: '/admin/devises',    label: 'Devises',     icon: DollarSign },
 ]

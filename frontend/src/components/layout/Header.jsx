@@ -39,8 +39,8 @@ export default function Header() {
   const navLinks = [
     { to: '/catalogue', label: t('nav.collection') },
     { to: '/catalogue?cat=parfums', label: t('nav.perfumes') },
-    { to: '/catalogue?cat=islamique', label: t('nav.islamic') },
-    { to: '/catalogue?cat=deco', label: t('nav.deco') },
+    { to: '/catalogue?cat=articles-islamiques', label: t('nav.islamic') },
+    { to: '/catalogue?cat=decoration-vaisselle', label: t('nav.deco') },
   ]
 
   return (

@@ -18,7 +18,7 @@ export default function Catalogue() {
   const [categories, setCategories] = useState([]);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  const currentCat = searchParams.get("cat") || "";
+  const currentCatParam = searchParams.get("cat") || "";
   const currentPage = Number(searchParams.get("page") || 1);
   const minPrice = searchParams.get("min") || "";
   const maxPrice = searchParams.get("max") || "";
@@ -31,8 +31,21 @@ export default function Catalogue() {
       .catch(() => {});
   }, []);
 
+  // Résolution slug → id : si le param cat n'est pas un entier, on cherche par slug
+  const resolvedCatId = (() => {
+    if (!currentCatParam) return "";
+    if (/^\d+$/.test(currentCatParam)) return currentCatParam;
+    const found = categories.find((c) => c.slug === currentCatParam);
+    return found ? String(found.id) : "";
+  })();
+  const currentCat = resolvedCatId;
+
   // Chargement des produits
   const fetchProducts = useCallback(() => {
+    // Si un param de catégorie slug est présent mais les catégories ne sont pas encore chargées,
+    // on attend qu'elles soient disponibles pour résoudre le slug en ID
+    if (currentCatParam && !/^\d+$/.test(currentCatParam) && categories.length === 0) return;
+
     setLoading(true);
 
     const params = new URLSearchParams({
@@ -51,7 +64,7 @@ export default function Catalogue() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [currentCat, currentPage, minPrice, maxPrice]);
+  }, [currentCat, currentCatParam, currentPage, minPrice, maxPrice, categories.length]);
 
   useEffect(() => {
     fetchProducts();

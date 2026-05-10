@@ -1,0 +1,24 @@
+Options -MultiViews
+RewriteEngine On
+
+# Forcer HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Rediriger www → non-www
+RewriteCond %{HTTP_HOST} ^www\.rif-line\.com [NC]
+RewriteRule ^ https://rif-line.com%{REQUEST_URI} [L,R=301]
+
+# Les requêtes /api/* sont gérées par Phusion Passenger (Node.js)
+# Passenger intercepte automatiquement les requêtes via la config cPanel
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^ - [L]
+
+# Les images uploadées sont servies par Express via /uploads/*
+RewriteCond %{REQUEST_URI} ^/uploads/
+RewriteRule ^ - [L]
+
+# Toutes les autres routes → index.html (React Router SPA)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

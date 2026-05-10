@@ -40,17 +40,13 @@ Dans cPanel → **MySQL Databases** :
 
 Dans cPanel → **phpMyAdmin** → sélectionner la base créée → onglet **Importer** :
 
-Importer dans cet ordre :
+Importer le fichier :
 
 ```
-backend/ecommerce_dev.sql                           ← schéma complet + données de base
-backend/migrations/001_add_sumup_checkout_id.sql    ← déjà inclus dans ecommerce_dev.sql
-backend/migrations/002_add_product_variants.sql     ← déjà inclus dans ecommerce_dev.sql
-backend/migrations/003_add_variant_image.sql        ← déjà inclus dans ecommerce_dev.sql
-backend/migrations/004_create_password_reset_tokens.sql  ← déjà inclus dans ecommerce_dev.sql
+database/rifline.sql    ← schéma complet post-migrations (un seul fichier suffit)
 ```
 
-> `ecommerce_dev.sql` a été re-dumpé après toutes les migrations — un seul fichier suffit.
+> Le fichier `database/rifline.sql` contient le schéma complet avec toutes les migrations intégrées.
 
 ### 1.3 Créer le compte admin
 
@@ -114,16 +110,16 @@ DB_NAME=user_rifline
 JWT_SECRET=CHAINE_ALEATOIRE_LONGUE_60_CHARS_MINIMUM
 
 BREVO_SMTP_USER=supaco.digital@gmail.com
-BREVO_SMTP_KEY=xsmtpsib-...
+BREVO_SMTP_KEY=<clé_smtp_brevo_prod>
 
-SUMUP_API_KEY=sup_sk_...
-SUMUP_CLIENT_ID=cc_classic_...
-SUMUP_CLIENT_SECRET=cc_sk_classic_...
-SUMUP_MERCHANT_CODE=MR93BZ4H
-SUMUP_WEBHOOK_SECRET=CHAINE_ALEATOIRE_POUR_WEBHOOK
+SUMUP_API_KEY=<api_key_sumup_prod>
+SUMUP_CLIENT_ID=<client_id_sumup_prod>
+SUMUP_CLIENT_SECRET=<client_secret_sumup_prod>
+SUMUP_MERCHANT_CODE=<merchant_code_sumup>
+SUMUP_WEBHOOK_SECRET=<chaine_aleatoire_webhook_sumup>
 
-SENDCLOUD_PUBLIC_KEY=88bfb8f7-...
-SENDCLOUD_SECRET_KEY=6a978f1...
+SENDCLOUD_PUBLIC_KEY=<public_key_sendcloud_prod>
+SENDCLOUD_SECRET_KEY=<secret_key_sendcloud_prod>
 
 SHOP_NAME=Rifline
 SHOP_ADDRESS_LINE1=1 rue de la Paix

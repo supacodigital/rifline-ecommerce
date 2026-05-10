@@ -34,6 +34,7 @@ import AdminCoupons    from './pages/admin/Coupons'
 import AdminCustomers  from './pages/admin/Customers'
 import AdminReports    from './pages/admin/Reports'
 import AdminCurrencies from './pages/admin/Currencies'
+import AdminReviews    from './pages/admin/Reviews'
 
 // Loader minimaliste pendant la vérification de session
 function AuthLoader() {
@@ -99,6 +100,7 @@ export default function App() {
                 <Route path="clients"        element={<AdminCustomers />} />
                 <Route path="rapports"       element={<AdminReports />} />
                 <Route path="devises"        element={<AdminCurrencies />} />
+                <Route path="avis"           element={<AdminReviews />} />
               </Route>
             </Routes>
             </WishlistProvider>
