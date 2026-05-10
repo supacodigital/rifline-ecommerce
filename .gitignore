@@ -6,9 +6,6 @@ node_modules/
 .env.local
 .env.production
 
-# Build frontend
-frontend/dist/
-
 # Images uploadées — servies mais non versionnées
 backend/uploads/products/*
 !backend/uploads/products/.gitkeep
