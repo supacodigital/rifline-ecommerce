@@ -1,0 +1,15 @@
+Options -MultiViews
+RewriteEngine On
+
+# Rediriger /api/* vers le backend Node.js (Passenger)
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^ - [L]
+
+# Rediriger /uploads/* vers le dossier uploads du backend
+RewriteCond %{REQUEST_URI} ^/uploads/
+RewriteRule ^ - [L]
+
+# Toutes les autres routes → index.html (React Router)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
