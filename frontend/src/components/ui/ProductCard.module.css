@@ -163,3 +163,18 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* Sur les appareils touch, les actions hover-only deviennent visibles en permanence */
+@media (hover: none) {
+  .overlay {
+    opacity: 1;
+    background: rgba(0,0,0,0.18);
+  }
+  .quickAdd {
+    transform: translateY(0);
+  }
+  .wishlistBtn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

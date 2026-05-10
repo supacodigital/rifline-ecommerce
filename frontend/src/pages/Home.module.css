@@ -387,12 +387,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-16) var(--space-12);
+  padding: var(--space-16) var(--space-8);
 }
 
 .editorialText blockquote {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: clamp(1.25rem, 4vw, var(--text-3xl));
   font-weight: 300;
   font-style: italic;
   color: var(--color-text);
@@ -482,12 +482,26 @@
   .sectionHeader { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
 }
 
+@media (max-width: 768px) {
+  .categories  { padding: var(--space-16) 0; }
+  .featured    { padding: var(--space-12) 0; }
+  .editorial   { padding: var(--space-16) 0; }
+  .newsletter  { padding: var(--space-12) 0; }
+  .editorialText { padding: var(--space-10) var(--space-6); }
+  .sliderCounter { display: none; }
+  .heroScroll    { display: none; }
+}
+
 @media (max-width: 600px) {
   .heroTitle { font-size: clamp(3rem, 12vw, 5rem); }
   .heroMeta { flex-direction: column; align-items: flex-start; }
-  .productsGrid { grid-template-columns: 1fr; }
+  .productsGrid { grid-template-columns: 1fr 1fr; }
   .categoriesGrid { grid-template-columns: 1fr; grid-template-rows: unset; }
   .catCard { min-height: 240px; }
   .newsletterForm { flex-direction: column; }
   .newsletterInput { border-right: 1px solid var(--color-border); border-bottom: none; }
+}
+
+@media (max-width: 400px) {
+  .productsGrid { grid-template-columns: 1fr; }
 }
