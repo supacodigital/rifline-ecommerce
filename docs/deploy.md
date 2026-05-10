@@ -109,8 +109,8 @@ DB_NAME=user_rifline
 
 JWT_SECRET=CHAINE_ALEATOIRE_LONGUE_60_CHARS_MINIMUM
 
-BREVO_SMTP_USER=supaco.digital@gmail.com
-BREVO_SMTP_KEY=<clé_smtp_brevo_prod>
+GMAIL_USER=<email_gmail_du_client>
+GMAIL_APP_PASSWORD=<mot_de_passe_application_google_16_chars>
 
 SUMUP_API_KEY=<api_key_sumup_prod>
 SUMUP_CLIENT_ID=<client_id_sumup_prod>

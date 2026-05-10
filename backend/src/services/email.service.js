@@ -1,17 +1,15 @@
-// Service d'envoi d'emails via Brevo (SMTP)
+// Service d'envoi d'emails via Gmail SMTP
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host:   'smtp-relay.brevo.com',
-  port:   587,
-  secure: false,
+  service: 'gmail',
   auth: {
-    user: process.env.BREVO_SMTP_USER,
-    pass: process.env.BREVO_SMTP_KEY,
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
   },
 });
 
-const FROM = `"${process.env.SHOP_NAME || 'Boutique'}" <${process.env.BREVO_SMTP_USER}>`;
+const FROM = `"${process.env.SHOP_NAME || 'Boutique'}" <${process.env.GMAIL_USER}>`;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // --- Helpers HTML ---
@@ -126,7 +124,7 @@ function passwordResetHtml(firstName, resetUrl) {
 // --- Fonctions d'envoi ---
 
 async function sendOrderConfirmation(order, items) {
-  if (!process.env.BREVO_SMTP_KEY) return;
+  if (!process.env.GMAIL_APP_PASSWORD) return;
   try {
     await transporter.sendMail({
       from:    FROM,
@@ -140,7 +138,7 @@ async function sendOrderConfirmation(order, items) {
 }
 
 async function sendPasswordReset(user, token) {
-  if (!process.env.BREVO_SMTP_KEY) return;
+  if (!process.env.GMAIL_APP_PASSWORD) return;
   const resetUrl = `${FRONTEND_URL}/reset-password?token=${token}`;
   try {
     await transporter.sendMail({
