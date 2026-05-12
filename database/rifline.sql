@@ -269,10 +269,8 @@ CREATE TABLE `refresh_tokens` (
 
 --
 -- Déchargement des données de la table `refresh_tokens`
+-- (vide — les sessions sont créées à la première connexion)
 --
-
-INSERT INTO `refresh_tokens` (`id`, `user_id`, `token_hash`, `expires_at`, `created_at`) VALUES
-(1, 1, 'ae720200857bcb8b54b2a26229d9294af3c90e07925d0a2e7a0ad2130e9ddea1', '2026-05-17 20:08:12', '2026-05-10 22:08:12');
 
 -- --------------------------------------------------------
 
@@ -350,10 +348,8 @@ CREATE TABLE `users` (
 
 --
 -- Déchargement des données de la table `users`
+-- (vide — créer le compte admin manuellement via /register puis UPDATE users SET role='admin')
 --
-
-INSERT INTO `users` (`id`, `email`, `password_hash`, `first_name`, `last_name`, `phone`, `role`, `is_verified`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'ali@rifline.com', '$2a$12$jb5xb7Vr/aURIoKyfTdgNOjqD40VcRX5vBKlBL3jrEEkHJJu.U/Z.', 'Ali', 'Rifline', NULL, 'admin', 0, '2026-05-10 22:07:19', '2026-05-10 22:07:19', NULL);
 
 -- --------------------------------------------------------
 

@@ -1,5 +1,13 @@
 require('dotenv').config();
 
+// Vérification des variables d'environnement obligatoires au démarrage
+const REQUIRED_ENV = ['FRONTEND_URL', 'JWT_SECRET', 'DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
+const missing = REQUIRED_ENV.filter(k => !process.env[k]);
+if (missing.length > 0) {
+  console.error(`FATAL: variables d'environnement manquantes : ${missing.join(', ')}`);
+  process.exit(1);
+}
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
